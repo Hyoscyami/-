@@ -10,4 +10,5 @@
 1. 主要是synchronized和volatile的一些用法
 2. TestSynchronized和TestSynchronized2是用来测试多个线程修改成员变量未同步导致的线程安全问题
 3. TestSynchronized3和TestSynchronized4是用来测试只同步set方法不同步get方法导致的脏读问题
-4. 
+4. TestSynchronized5和TestSynchronized6是用来测试synchronized关键字可重入特性
+5. TestSynchronized7、TestSynchronized8和TestSynchronized9用来测试synchronized关键字可重入特性也支持父子继承
