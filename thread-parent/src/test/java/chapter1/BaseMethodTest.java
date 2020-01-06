@@ -5,9 +5,9 @@ import org.junit.Test;
 /**
 * @Author xusf
 * @Date 2020/1/3 11:07
-* @Description : 线程常用方法
+* @Description : 线程常用方法，过时方法不在此列，如stop，suspend，resume等
 */
-public class BaseMethod {
+public class BaseMethodTest {
     /**
      * 获得当前线程
      */
@@ -89,7 +89,7 @@ public class BaseMethod {
     @Test
     public void testInterrupt(){
         try {
-            TestInterrupt testInterrupt = new TestInterrupt();
+            TestInterruptThread testInterrupt = new TestInterruptThread();
             testInterrupt.start();
             Thread.sleep(2000);
             testInterrupt.interrupt();
@@ -105,11 +105,11 @@ public class BaseMethod {
     @Test
     public void testInterrupted(){
         try {
-            TestInterrupt testInterrupt = new TestInterrupt();
+            TestInterruptThread testInterrupt = new TestInterruptThread();
             testInterrupt.start();
             Thread.sleep(2000);
             testInterrupt.interrupt();
-//            两条语句打印结果是一样的，都是“当前线程:main是否被中断:false”
+//            两条语句打印结果是一样的，都是“当前线程:main是否被中断:false”，因为当前线程是main线程，没有收到中断信号
             System.out.println("当前线程:" + Thread.currentThread().getName() + "是否被中断:" + Thread.interrupted());
             System.out.println("当前线程:" + Thread.currentThread().getName() + "是否被中断:" + testInterrupt.interrupted());
         } catch (InterruptedException e) {
@@ -140,7 +140,7 @@ public class BaseMethod {
     @Test
     public void testIsInterrupted(){
         try {
-            TestInterrupt testInterrupt = new TestInterrupt();
+            TestInterruptThread testInterrupt = new TestInterruptThread();
             testInterrupt.start();
             Thread.sleep(2000);
             testInterrupt.interrupt();
@@ -153,4 +153,84 @@ public class BaseMethod {
         }
     }
 
+    /**
+     * 测试停止线程，通过中断去停止线程，推荐使用，如果run方法收到中断信号没有抛异常进入catch块的话，那线程收到中断信号不会立即停止，会在它认为合适的时候停止
+     */
+    @Test
+    public void testStopThread(){
+        TestStopThread testStopThread = new TestStopThread();
+        testStopThread.start();
+        try {
+            Thread.sleep(2000);
+            testStopThread.interrupt();
+        } catch (InterruptedException e) {
+            System.out.println("test方法catch掉了中断异常");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试停止线程，通过中断去停止正在sleep的线程
+     */
+    @Test
+    public void testStopThread2(){
+        TestInterruptThread2 testInterruptThread2 = new TestInterruptThread2();
+        testInterruptThread2.start();
+        try {
+            Thread.sleep(200);
+            testInterruptThread2.interrupt();
+        } catch (InterruptedException e) {
+            System.out.println("test方法catch掉了中断异常");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试yield方法
+     */
+    @Test
+    public void testYield(){
+        TestYieldThread testYieldThread = new TestYieldThread();
+        testYieldThread.start();
+        try {
+//            这里不睡的话，打印不出来
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试线程优先级继承特性
+     */
+    @Test
+    public void testPriority(){
+        TestPriorityThread testPriorityThread = new TestPriorityThread();
+        testPriorityThread.setPriority(6);
+        testPriorityThread.start();
+        try {
+//            不睡的话test方法就结束了，会少打印东西
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试守护线程特性，当没有非守护线程在进程中运行后，守护线程会自动销毁
+     */
+    @Test
+    public void testDaemon(){
+        TestDaemonThread testDaemonThread = new TestDaemonThread();
+//        这里注意，要在启动前设置是否为守护线程，不然会抛java.lang.IllegalThreadStateException异常，默认为否
+        testDaemonThread.setDaemon(true);
+        testDaemonThread.start();
+        try {
+            Thread.sleep(3000);
+            System.out.println("我执行完了以后就没有非守护线程了，守护线程要开始销毁了！");
+//            执行完这句后testDaemonThread守护线程可能还会打印出几次，因为还没那么快销毁
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
