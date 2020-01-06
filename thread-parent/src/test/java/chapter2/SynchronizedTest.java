@@ -55,4 +55,48 @@ public class SynchronizedTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 测试不加synchronized在get方法上导致脏读
+     */
+    @Test
+    public void testSynchronized2(){
+        TestSynchronized3 testSynchronized3 = new TestSynchronized3();
+        TestSynchronized4 testSynchronized4 = new TestSynchronized4(testSynchronized3);
+        testSynchronized4.start();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        testSynchronized3.getValue();
+    }
+
+    /**
+     * 测试synchronized的可重入特性
+     */
+    @Test
+    public void testSynchronized3(){
+        TestSynchronized6 testSynchronized6 = new TestSynchronized6();
+        testSynchronized6.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试synchronized可重入特性在父子继承中也有效
+     */
+    @Test
+    public void testSynchronized4(){
+        TestSynchronized9 testSynchronized9 = new TestSynchronized9();
+        testSynchronized9.start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
