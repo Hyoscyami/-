@@ -1,5 +1,9 @@
 package chapter2;
-
+/**
+* @Author xusf
+* @Date 2020/1/7 9:15
+* @Description : 用来测试synchronized关键字可重入特性
+*/
 public class TestSynchronized5 {
     /**
      * 因为synchronized有可重入特性，所以这里才不会死锁，同一个对象可以再次获得自己的内部锁

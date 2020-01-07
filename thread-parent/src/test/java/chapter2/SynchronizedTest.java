@@ -99,4 +99,73 @@ public class SynchronizedTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 测试出现异常会自动释放锁
+     */
+    @Test
+    public void testSynchronized5(){
+        TestSynchronized10 testSynchronized10 = new TestSynchronized10();
+        TestSynchronized11 testSynchronized11 = new TestSynchronized11(testSynchronized10,200,"a");
+        TestSynchronized11 testSynchronized111 = new TestSynchronized11(testSynchronized10,1000,"b");
+        testSynchronized11.start();
+        testSynchronized111.start();
+        try {
+            Thread.sleep(1800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试同步不具有继承性
+     */
+    @Test
+    public void testSynchronized6(){
+        TestSynchronized13 testSynchronized13 = new TestSynchronized13();
+        TestSynchronized14 testSynchronized14 = new TestSynchronized14(testSynchronized13);
+        TestSynchronized14 testSynchronized141 = new TestSynchronized14(testSynchronized13);
+        testSynchronized14.start();
+        testSynchronized141.start();
+        try {
+            Thread.sleep(1800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试synchronized同步代码块，方法耗时长的时候可以在保证线程安全的情况下只同步线程不安全的代码块
+     */
+    @Test
+    public void testSynchronized7(){
+        TestSynchronized15 testSynchronized15 = new TestSynchronized15();
+        TestSynchronized16 testSynchronized16 = new TestSynchronized16(testSynchronized15,"a","aa");
+        TestSynchronized16 testSynchronized161 = new TestSynchronized16(testSynchronized15,"b","bb");
+        testSynchronized16.start();
+        testSynchronized161.start();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试synchronized方法之间的同步性，即同一个对象的锁被占用，其他线程不能访问所有被加锁的方法
+     * synchronized代码块和synchronized方法之间的同步性一样，就不再赘述
+     */
+    @Test
+    public void testSynchronized8(){
+        TestSynchronized17 testSynchronized17 = new TestSynchronized17();
+        TestSynchronized18 testSynchronized18 = new TestSynchronized18(testSynchronized17);
+        TestSynchronized19 testSynchronized19 = new TestSynchronized19(testSynchronized17);
+        testSynchronized18.start();
+        testSynchronized19.start();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
