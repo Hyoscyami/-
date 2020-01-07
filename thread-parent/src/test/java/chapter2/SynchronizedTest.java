@@ -159,11 +159,67 @@ public class SynchronizedTest {
     public void testSynchronized8(){
         TestSynchronized17 testSynchronized17 = new TestSynchronized17();
         TestSynchronized18 testSynchronized18 = new TestSynchronized18(testSynchronized17);
-        TestSynchronized19 testSynchronized19 = new TestSynchronized19(testSynchronized17);
+//        TestSynchronized19 testSynchronized19 = new TestSynchronized19(testSynchronized17);
         testSynchronized18.start();
-        testSynchronized19.start();
+//        testSynchronized19.start();
         try {
             Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 一个现成乱序执行导致的现成不安全例子
+     */
+    @Test
+    public void testSynchronized9(){
+        TestSynchronized20 testSynchronized20 = new TestSynchronized20();
+        TestSynchronized22 testSynchronized22 = new TestSynchronized22(testSynchronized20);
+        TestSynchronized22 testSynchronized221 = new TestSynchronized22(testSynchronized20);
+        testSynchronized22.start();
+        testSynchronized221.start();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        这里本来期望应该是size=1,但是因为线程执行的不确定性导致脏读
+        System.out.println("size:" + testSynchronized20.getSize());
+    }
+
+    /**
+     * 测试常量池特性对synchronized的影响
+     * 其实本质上和锁同一个对象一样的结果，总结来说就是锁的是同一个对象，那这个同步方法就是顺序执行
+     */
+    @Test
+    public void testSynchronized10(){
+        TestSynchronized23 testSynchronized23 = new TestSynchronized23();
+        TestSynchronized24 testSynchronized24 = new TestSynchronized24(testSynchronized23,"a");
+        TestSynchronized24 testSynchronized241 = new TestSynchronized24(testSynchronized23,"a");
+//        如果使用的是这一行，那么打印出来的就是非同步的，因为锁的不是同一个对象
+//        TestSynchronized24 testSynchronized241 = new TestSynchronized24(testSynchronized23,new String("a"));
+        testSynchronized24.start();
+        testSynchronized241.start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试锁同一个对象后同步方法A长时间阻塞（极端情况如死循环），导致其他同步方法长时间无法执行
+     */
+    @Test
+    public void testSynchronized11(){
+        TestSynchronized25 testSynchronized25 = new TestSynchronized25();
+        TestSynchronized26 testSynchronized26 = new TestSynchronized26(testSynchronized25);
+        TestSynchronized27 testSynchronized27 = new TestSynchronized27(testSynchronized25);
+        testSynchronized26.start();
+        testSynchronized27.start();
+        try {
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
