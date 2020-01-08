@@ -159,9 +159,9 @@ public class SynchronizedTest {
     public void testSynchronized8(){
         TestSynchronized17 testSynchronized17 = new TestSynchronized17();
         TestSynchronized18 testSynchronized18 = new TestSynchronized18(testSynchronized17);
-//        TestSynchronized19 testSynchronized19 = new TestSynchronized19(testSynchronized17);
+        TestSynchronized19 testSynchronized19 = new TestSynchronized19(testSynchronized17);
         testSynchronized18.start();
-//        testSynchronized19.start();
+        testSynchronized19.start();
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -223,5 +223,20 @@ public class SynchronizedTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testSynchronized12(){
+        TestSynchronized28 testSynchronized28 = new TestSynchronized28();
+        TestSynchronized29 testSynchronized29 = new TestSynchronized29(testSynchronized28);
+        TestSynchronized30 testSynchronized30 = new TestSynchronized30(testSynchronized28);
+        testSynchronized29.start();
+        testSynchronized30.start();
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("死锁了");
     }
 }
