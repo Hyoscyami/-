@@ -2,6 +2,9 @@ package chapter3;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
 * @Author xusf
 * @Date 2020/1/8 14:21
@@ -119,5 +122,73 @@ public class WaitTest {
     public void testWait7(){
         TestWait testWait = new TestWait();
         testWait.method2();
+    }
+
+    /**
+     * 解决先notify再开始wait的问题
+     */
+    @Test
+    public void testWait8(){
+        TestWait5 testWait5 = new TestWait5();
+        TestWait6 testWait6 = new TestWait6(testWait5);
+        TestWait7 testWait7 = new TestWait7(testWait5);
+        testWait6.start();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        testWait7.start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试多个线程进入wait以后都被唤醒，重复执行代码，例如多个线程都删除list导致数组越界
+     */
+    @Test
+    public void testWait9(){
+        String lock = new String("");
+        List<String> list = new ArrayList<>();
+        TestWait8 testWait8 = new TestWait8(lock,list);
+        TestWait9 testWait9 = new TestWait9(lock,list);
+        TestWait11 testWait11 = new TestWait11(testWait9);
+        TestWait11 testWait111 = new TestWait11(testWait9);
+        testWait11.start();
+        testWait111.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        TestWait10 testWait10 = new TestWait10(testWait8);
+        testWait10.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testWait10(){
+        List<String> list = new ArrayList<>();
+       TestWait12 testWait12 = new TestWait12(list);
+       TestWait13 testWait13 = new TestWait13(list);
+       TestWait14 testWait14 = new TestWait14(testWait12,list);
+       TestWait15 testWait15 = new TestWait15(testWait13,list);
+       testWait14.start();
+       testWait15.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
