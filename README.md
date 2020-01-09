@@ -23,4 +23,5 @@
 1. TestWait、TestWait2、TestWait3和TestWait4是测试wait和notify
 2. TestWait5、TestWait6和TestWait7解决notify先通知然后线程再进入wait导致长时间wait
 3. TestWait8、TestWait9、TestWait10和TestWait11测试多个线程进入wait以后都被唤醒，重复执行代码，例如多个线程都删除list导致数组越界
-4. TestWait12、TestWait13、TestWait14和TestWait15测试单个生产者和消费者模式
+4. TestWait12、TestWait13、TestWait14和TestWait15测试单个生产者和消费者模式(其实这个示范有点跑偏了，虽然结果和生产者消费者模式一致，但是生产者和消费者并没有直接通过wait和notify通信，而是通过了共同的list)
+5. TestConsume、TestProduct、TestWait16和TestWait17测试单个生产者和消费者

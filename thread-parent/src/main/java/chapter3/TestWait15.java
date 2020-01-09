@@ -4,7 +4,7 @@ import java.util.List;
 /**
 * @Author xusf
 * @Date 2020/1/9 15:25
-* @Description : 测试单个生产者和消费者模式
+* @Description : 测试单个生产者和消费者模式(其实这个示范有点跑偏了，虽然结果和生产者消费者模式一致，但是生产者和消费者并没有直接通过wait和notify通信，而是通过了共同的list)
 */
 public class TestWait15 extends Thread {
     private TestWait13 testWait13;
