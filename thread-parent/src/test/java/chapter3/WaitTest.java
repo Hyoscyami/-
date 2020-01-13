@@ -223,7 +223,7 @@ public class WaitTest {
      * 即所有线程都在等待的状态，解决办法就是讲notify改成notifyAll
      */
     @Test
-    public void testWait11(){
+    public void testWait12(){
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             TestWait12 testWait12 = new TestWait12(list);
