@@ -217,4 +217,26 @@ public class WaitTest {
         }
 
     }
+
+    /**
+     * 测试多个生产者和消费者，如果只使用notify，可能会出现消费者通知消费者，生产者通知生产者的情况导致“假死”
+     * 即所有线程都在等待的状态，解决办法就是讲notify改成notifyAll
+     */
+    @Test
+    public void testWait11(){
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            TestWait12 testWait12 = new TestWait12(list);
+            TestWait13 testWait13 = new TestWait13(list);
+            TestWait14 testWait14 = new TestWait14(testWait12,list);
+            TestWait15 testWait15 = new TestWait15(testWait13,list);
+            testWait14.start();
+            testWait15.start();
+        }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
