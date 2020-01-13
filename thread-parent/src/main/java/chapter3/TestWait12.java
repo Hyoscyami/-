@@ -16,7 +16,9 @@ public class TestWait12 {
     public void consume(List<String> list) {
         synchronized (list) {
             System.out.println("进入consume方法，当前线程名：" + Thread.currentThread().getName() + "时间戳：" + System.currentTimeMillis());
-            if (list.size() == 0) {
+//            单个消费者和生产者的情况这里可以写if而不是while，但是多个生产者和消费者的情况这里写if可能会导致执行list.remove的时候出现数组越界
+//            原因是消费者-0进入等待，消费者-1进入等待，然后生产者生产完成执行notifyAll同时唤醒了两个消费者，然后两个消费者都往下执行，其中一个就会数组越界
+            while (list.size() == 0) {
                 try {
                     System.out.println("开始等待生产者生产，当前线程名：" + Thread.currentThread().getName() + "时间戳：" + System.currentTimeMillis());
                     list.wait();

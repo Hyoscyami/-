@@ -7,6 +7,9 @@ import java.util.List;
 * @Description : 测试单个生产者和消费者模式
 */
 public class TestWait15 extends Thread {
+    /**
+     * 生产者
+     */
     private TestWait13 testWait13;
     private List<String> list;
 
