@@ -27,3 +27,8 @@
 5. TestConsume、TestProduct、TestWait16和TestWait17测试单个生产者和消费者
 6. TestWriteData、TestReadData、TestWriteDataThread、TestWriteDataThread、TestWriteDataThread和TestWriteDataThread2是测试线程通过管道的通信
 #### chapter4: 可重入锁Lock相关
+1. TestLock、TestLockThread和TestLockThread2是测试lock的基本用法，lock()和unlock()
+2. TestLock2和TestLockThread3是一个lock和一个condition的基本用法
+3. TestLock3、TestLockThread4、TestLockThread5、TestLockThread6和TestLockThread7是测试一个lock和多个condition的情况
+4. TestLock4、TestLockThread8和TestLockThread8是测试lock实现的单个生产者和消费者
+5. TestLock5、TestLockThread10和TestLockThread11是lock实现的多个生产者和消费者
