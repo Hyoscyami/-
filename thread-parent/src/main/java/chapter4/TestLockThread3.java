@@ -1,5 +1,9 @@
 package chapter4;
-
+/**
+* @Author xusf
+* @Date 2020/1/14 9:34
+* @Description : lock和condition的基本用法
+*/
 public class TestLockThread3 extends Thread {
     private TestLock2 testLock2;
 

@@ -2,7 +2,11 @@ package chapter4;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
+/**
+* @Author xusf
+* @Date 2020/1/14 9:33
+* @Description : lock基本用法
+*/
 public class TestLock {
     private Lock lock = new ReentrantLock();
 

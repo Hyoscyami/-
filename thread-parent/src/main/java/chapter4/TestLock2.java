@@ -3,7 +3,11 @@ package chapter4;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
+/**
+* @Author xusf
+* @Date 2020/1/14 9:33
+* @Description : lock和condition的基本用法
+*/
 public class TestLock2 {
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
